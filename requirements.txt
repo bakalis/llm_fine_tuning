@@ -1,0 +1,8 @@
+transformers==4.40.0
+accelerate
+gradio==6.0.1
+python-dotenv
+llama-cpp-python==0.3.2 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+huggingface_hub
+openai-whisper
+TTS==0.22.0
