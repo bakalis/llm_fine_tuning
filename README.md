@@ -8,6 +8,10 @@ This project implements an end-to-end pipeline for fine-tuning the Llama-3.2-3B-
 - Dataset: mlabonne/FineTome-100k (ShareGPT format)
 - Evaluation: Sentence-Transformers (S-BERT), Rouge-Score
 - Quantization: llama.cpp
+- Hosting Platform: Hugging Face for both models and UI
+- UI: Gradio python library
+- Speech-to-Text: whisper small.en model
+- Text-to-Speech: Coqui TTS tts_models/en/ljspeech/tacotron2-DDC model
 
 ## Workflow
 ### 1. Data Preparation
@@ -50,5 +54,15 @@ With the answers and scores being saved, there is also a possibility for further
 - Convert: Converts the merged model to GGUF F16
 - Quantize: Compresses the model to Q4_K_M (4-bit quantization) for efficient execution
 
+### 6. Inference
 
+UI: https://huggingface.co/spaces/bakalis/iris \
+App source code: https://huggingface.co/spaces/bakalis/iris/blob/main/app.py
+
+- UI: Gradio Chatbot with Speech-to-Text and Text-to-Speech features.
+- Context Window: 8192 tokens.
+- Models: Supports both 1B and 3B fine-tuned models, interchangeably by a selector.
+- Execution: Inference is executed on CPU.
+- Interface: User can either enter a prompt using the textfield or record audio from his microphone.
+- Output: By pressing r on the keyboard or the relevant button the last answer the chatbot has given is converted to audio and played.
 
