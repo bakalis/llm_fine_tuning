@@ -10,7 +10,7 @@ This project implements an end-to-end pipeline for fine-tuning the Llama-3.2-3B-
 - Quantization: llama.cpp
 
 ## Workflow
-1. Data Preparation
+### 1. Data Preparation
 
 The pipeline loads the FineTome-100k dataset, standardizes it to the ShareGPT format, and applies the Llama-3.1 chat template. The data is split into three subsets:
   - Coarse Set (1k samples): For rapid hyperparameter exploration
@@ -19,7 +19,7 @@ The pipeline loads the FineTome-100k dataset, standardizes it to the ShareGPT fo
 
 For more specific tasks (e.g. function calling), a different dataset can be used.
 
-2. Hyperparameter Optimization (Optuna)
+### 2. Hyperparameter Optimization (Optuna)
   - Stage 1: Coarse Search
     - Runs 12 trials on the small dataset (1k samples)
     - Explores a wide range of Learning Rates (4e-5 to 4e-4), LoRA Ranks (8, 16, 32), and Weight Decay (0.005 to 0.05)
@@ -30,13 +30,13 @@ For more specific tasks (e.g. function calling), a different dataset can be used
 ![Hyperparameter Contour Plot](./plots/hyperparams-contour.png)
 ![Hyperparameter Importance Plot](./plots/hyperparams-importance.png)
 
-3. Fine-Tuning Training
+### 3. Fine-Tuning Training
 
 The best parameters found in Stage 2 (Learning Rate, Rank, Weight Decay) are injected into the final unsloth SFTTrainer
   - Config: QLoRA, Gradient Accumulation
   - Recovery: Includes checkpoint resumption logic to recover from Google Colab timeouts
 
-4. Evaluation
+### 4. Evaluation
 
 The script generates responses for a set of modified test prompts from the dataset using both the Base Model and the Fine-Tuned Model. It calculates:
   - S-BERT Cosine Similarity: Measures how semantically similar the generated answer is to the ground truth
@@ -44,7 +44,7 @@ The script generates responses for a set of modified test prompts from the datas
 
 With the answers and scores being saved, there is also a possibility for further Human Review or LLM-based Evaluation
 
-5. Export & Quantization
+### 5. Export & Quantization
 - Merge: Merges LoRA adapters into the base model (16-bit)
 - Build: Compiles llama.cpp from source
 - Convert: Converts the merged model to GGUF F16
